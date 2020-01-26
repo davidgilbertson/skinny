@@ -1,13 +1,15 @@
 var host = document.location.host;
 var storage = chrome.storage.sync;
 
-function loadCSS(file) {
-  if (document.getElementById(file)) {//the css has already been added
+var CSS_FILE_NAME = 'skinny.css';
+
+function loadCSS() {
+  if (document.getElementById(CSS_FILE_NAME)) {//the css has already been added
     return;
   }
   var link = document.createElement('link');
-  link.href = chrome.extension.getURL(file);
-  link.id = file;
+  link.href = chrome.extension.getURL(CSS_FILE_NAME);
+  link.id = CSS_FILE_NAME;
   link.type = 'text/css';
   link.rel = 'stylesheet';
   var head = document.getElementsByTagName('head')[0];
@@ -16,8 +18,8 @@ function loadCSS(file) {
   }
 }
 
-function unloadCSS(file) {
-  var cssNode = document.getElementById(file);
+function unloadCSS(CSS_FILE) {
+  var cssNode = document.getElementById(CSS_FILE);
   if (cssNode) { //this could be called when the thing's already unloaded
     cssNode.parentNode.removeChild(cssNode);
   }
@@ -32,8 +34,7 @@ function addOrRemoveCSS(opt) {
         storage.set(hostObj);
       }
 
-      loadCSS('skinny-default.css');
-      if (host.match(/wikipedia.org/)) loadCSS('skinny-wiki.css');
+      loadCSS();
 
       chrome.runtime.sendMessage({status: 'on'});
     } else {
@@ -41,8 +42,7 @@ function addOrRemoveCSS(opt) {
         storage.remove(host);
       }
 
-      unloadCSS('skinny-default.css');
-      if (host.match(/wikipedia.org/)) unloadCSS('skinny-wiki.css');
+      unloadCSS();
 
       chrome.runtime.sendMessage({status: 'off'});
     }

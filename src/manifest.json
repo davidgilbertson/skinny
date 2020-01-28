@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Skinny",
   "description": "This extension lets you limit the width of any web page, for better readability on big screens.",
-  "version": "1.6",
+  "version": "1.8",
   "permissions": [
     "activeTab",
     "storage"
@@ -17,9 +17,6 @@
       "js": ["tab.js"],
       "run_at": "document_start"
     }
-  ],
-  "web_accessible_resources": [
-    "skinny.css"
   ],
   "icons": {
     "16": "icon_16_off.png",

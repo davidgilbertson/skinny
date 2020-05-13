@@ -37,8 +37,9 @@ const state = {
 
 /** @param {?number} width */
 const setBodyWidth = width => {
-  // We use 'auto' instead of '' to the observer doesn't trigger
-  document.body.style.width = width ? `${width}px` : 'auto';
+  // Some sites (outlook.live.com) break when body width is auto (when the extension is off)
+  // So this must be blank. It doesn't seem to trigger the observer when blank
+  document.body.style.width = width ? `${width}px` : '';
 };
 
 const stripPx = (string = '') => Number(string.replace('px', ''));
@@ -251,6 +252,7 @@ const loadSkinny = async (startWidth = START_WIDTH) => {
 
   state.currentWidth = startWidth;
 
+  // Don't inject styles if they're already there
   if (document.getElementById(IDS.STYLE_EL)) return;
 
   injectStyles();
